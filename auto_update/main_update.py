@@ -6,4 +6,4 @@
 """
 # 测试Git Actions2
 # 打印时指定 UTF-8 编码
-print('success')
+print(' app run success')
