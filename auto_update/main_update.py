@@ -5,4 +5,5 @@
 @Description : 基于Git Actions的客户端更新
 """
 # 测试Git Actions2
-input('请输入:')
+# 打印时指定 UTF-8 编码
+input('enter:')
