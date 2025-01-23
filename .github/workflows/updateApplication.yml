@@ -55,8 +55,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: 编译exe
         run: |
-          python run_write_version.py
-          pyinstaller --noconfirm --onefile --windowed --icon "app.ico" "main_update.py"
+          python ./auto_update/run_write_version.py
+          pyinstaller --noconfirm --onefile --windowed --icon "./auto_update/app.ico" "./auto_update/main_update.py"
       - name: 测试运行情况
         uses: GuillaumeFalourd/assert-command-line-output@v2
         with:
