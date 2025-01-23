@@ -48,8 +48,7 @@ jobs:
           architecture: "x64"
           cache: 'pip'
       - name: 下载依赖文件
-#        run: pip install -r requirements.txt
-        run: pip install pyinstaller
+        run: pip install -r requirements.txt
       - name: 编译exe
         run: |
           python run_write_version.py
