@@ -26,6 +26,9 @@ jobs:
       - name: 查看变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
+      - name: Display workspace directory
+        run:
+          echo "Current workspace: $GITHUB_WORKSPACE"
       - name: Set up the working directory
         run: |
           mkdir my_directory
