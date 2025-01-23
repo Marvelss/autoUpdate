@@ -10,6 +10,7 @@ permissions: write-all # 给所有工作写权限
 
 jobs:
   jobs_v:
+
     name: building version number and update content
     runs-on: windows-latest
     outputs:
@@ -23,16 +24,7 @@ jobs:
           disable-autolabeler: true # 禁止自动标签
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 查看变量
-        run: |
-          echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }} 
-      - name: Display workspace directory
-        run:
-          echo "Current workspace: $GITHUB_WORKSPACE"
-      - name: Set up the working directory
-        run: |
-          mkdir my_directory
-        working-directory: ./my_directory
+
   jobs_window:
     needs: jobs_v # 等待 jobs_v 任务完成才执行
     name: 构建window软件
@@ -47,6 +39,12 @@ jobs:
       - name: 读入环境信息
         run: |
           echo ${{ format('version {0}', env.version ) }} # 版本号
+      - name: 查看变量
+        run: |
+          echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }}
+      - name: Display workspace directory
+        run: |
+          echo "Current workspace: $GITHUB_WORKSPACE"
       - name: 编译环境设置 Python 3.9.13
         uses: actions/setup-python@v4
         with:
