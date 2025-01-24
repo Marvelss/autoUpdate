@@ -13,13 +13,7 @@ permissions: write-all # 给所有工作写权限
 jobs:
   jobs_v:
     name: building version number and update content
-    permissions:
-      # write permission is required to create a github release
-      contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
-      pull-requests: write
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
