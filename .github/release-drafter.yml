@@ -46,28 +46,28 @@ version-resolver:
 autolabeler:
   - label: "feat"
     title:
-      - "/^feat:/i"
+      - "/feat/i"
   - label: "fix"
     title:
-      - "/^fix:/i"
+      - "/fix/i"
   - label: "perf"
     title:
-      - "/^perf:/i"
+      - "/perf/i"
   - label: "style"
     title:
       - "/^style:/i"
   - label: "chore"
     title:
-      - "/^chore:/i"
+      - "/chore/i"
   - label: "refactor"
     title:
-      - "/^refactor:/i"
+      - "/refactor/i"
   - label: "docs"
     title:
-      - "/^docs:/i"
+      - "/docs/i"
   - label: "test"
     title:
-      - "/^test:/i"
+      - "/test/i"
 
 template: |
   # What's Changed
