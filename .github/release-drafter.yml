@@ -1,14 +1,18 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
-  - title: '🚀 新功能'
+  - title: '🎉 New Features'
     labels:
-      - '新功能'
-  - title: '🐛 Bug 修复'
+      - 'feat'
+  - title: '🚀 performance Enhancements'
+    labels:
+      - 'pref'
+  - title: '🐛 Bug Fixes'
     labels:
       - 'bug'
-  - title: '🧰 日常维护'
-    label: '日常维护'
+  - title: 'Other Changes'
+    labels:
+      - 'style'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&'
 version-resolver:
@@ -23,11 +27,7 @@ version-resolver:
       - 'patch'
   default: patch
 template: |
-  # 自动更新程序
-  * 更新了自动构建
-  * 自动获取版本
-  * 自动下载
-  * 自动替换
+  # What's Changed
 
   $CHANGES
 no-changes-template: |
