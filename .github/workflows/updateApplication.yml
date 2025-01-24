@@ -18,7 +18,7 @@ jobs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
     steps:
-      - uses: release-drafter/release-drafter@v5
+      - uses: release-drafter/release-drafter@v6
         id: create_version
         with:
           config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
