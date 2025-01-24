@@ -16,15 +16,10 @@ jobs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
     steps:
-      - name: Set custom version number
-        run: |
-          echo "CUSTOM_VERSION=1.2.3" >> $GITHUB_ENV # 设置自定义版本号
       - uses: release-drafter/release-drafter@v5
         id: create_version
         with:
           config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
-          disable-autolabeler: true # 禁止自动标签
-          version: ${{ env.CUSTOM_VERSION }} # 使用自定义版本号
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

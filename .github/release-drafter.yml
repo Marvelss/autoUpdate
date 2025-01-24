@@ -9,7 +9,7 @@ categories:
       - 'pref'
   - title: '🐛 Bug Fixes'
     labels:
-      - 'bug'
+      - 'fix'
   - title: 'Other Changes'
     labels:
       - 'style'
@@ -19,12 +19,16 @@ version-resolver:
   major:
     labels:
       - 'major'
+      - 'feat'
   minor:
     labels:
       - 'minor'
+      - 'pref'
   patch:
     labels:
       - 'patch'
+      - 'style'
+      - 'fix'
   default: patch
 template: |
   # What's Changed
