@@ -28,7 +28,7 @@ jobs:
         id: create_version
         with:
           config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
-          disable-autolabeler: true
+          disable-autolabeler: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
