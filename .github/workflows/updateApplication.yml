@@ -15,7 +15,7 @@ jobs:
     name: building version number and update content
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.create_version.outputs.resolved_version }} # 版本号
+      version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
     steps:
       - uses: release-drafter/release-drafter@v5
