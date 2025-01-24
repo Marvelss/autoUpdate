@@ -39,6 +39,7 @@ version-resolver:
       - 'docs'
       - 'test'
   default: patch
+
 autolabeler:
   - label: "feat"
     title:
