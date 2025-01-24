@@ -16,11 +16,15 @@ jobs:
       version: ${{ steps.create_version.outputs.tag_name }} # 版本号
       body: ${{ steps.create_version.outputs.body }} # 版本变更内容
     steps:
+      - name: Set custom version number
+        run: |
+          echo "CUSTOM_VERSION=1.2.3" >> $GITHUB_ENV # 设置自定义版本号
       - uses: release-drafter/release-drafter@v5
         id: create_version
         with:
           config-name: release-drafter.yml # 配置文件在 .github/release-drafter.yml
           disable-autolabeler: true # 禁止自动标签
+          version: ${{ env.CUSTOM_VERSION }} # 使用自定义版本号
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -37,13 +41,10 @@ jobs:
           submodules: recursive
       - name: 读入环境信息
         run: |
-          echo ${{ format('version {0}', env.version ) }} # 版本号
-      - name: 查看变量
+          echo ${{ format('version {0}', env.CUSTOM_VERSION ) }} # 版本号
+      - name: 查看标签变量
         run: |
           echo ${{ format('version={0}', steps.create_version.outputs.tag_name ) }}
-      - name: Display workspace directory
-        run: |
-          echo "Current workspace: $GITHUB_WORKSPACE"
       - name: 编译环境设置 Python 3.9.13
         uses: actions/setup-python@v4
         with:
@@ -83,7 +84,7 @@ jobs:
           path: ./
       - name: 读入环境信息
         run: |
-          echo ${{ format('version {0}', env.version ) }}
+          echo ${{ format('version {0}', env.CUSTOM_VERSION ) }}
           echo ${{steps.download.outputs.download-path}}
           ls -R
 
@@ -94,6 +95,6 @@ jobs:
           allowUpdates: true # 覆盖文件
           #draft: true # 草稿 自己可见 版本号会保持一样 默认是自动发布 latest
           #prerelease: true # 预发布 别人可以看到 版本号会继续加
-          tag: ${{ env.version }} # 版本号 v0.1.0
+          tag: ${{ env.CUSTOM_VERSION }} # 版本号 v0.1.0
           body: ${{ env.body }} # 输出的内容
           artifacts: "window/*.exe"
