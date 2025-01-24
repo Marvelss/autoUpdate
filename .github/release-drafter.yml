@@ -4,32 +4,57 @@ categories:
   - title: '🎉 New Features'
     labels:
       - 'feat'
-  - title: '🚀 performance Enhancements'
+  - title: '🚀 Performance Enhancements'
     labels:
-      - 'pref'
+      - 'perf'
   - title: '🐛 Bug Fixes'
     labels:
       - 'fix'
   - title: 'Other Changes'
     labels:
       - 'style'
+      - 'chore'
+      - 'refactor'
+      - 'docs'
+      - 'test'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&'
 version-resolver:
   major:
     labels:
       - 'major'
-      - 'feat'
+      - 'BREAKING CHANGE'
   minor:
     labels:
       - 'minor'
-      - 'pref'
+      - 'feat'
+      - 'perf'
   patch:
     labels:
       - 'patch'
       - 'style'
       - 'fix'
+      - 'chore'
+      - 'refactor'
+      - 'docs'
+      - 'test'
   default: patch
+autolabeler:
+  - label: "feat"
+    title:
+      - "/^feat:/i"
+  - label: "fix"
+    title:
+      - "/^fix:/i"
+  - label: "perf"
+    title:
+      - "/^perf:/i"
+  - label: "style"
+    title:
+      - "/^style:/i"
+  - label: "chore"
+    title:
+      - "/^chore:/i"
 template: |
   # What's Changed
 
