@@ -10,7 +10,6 @@ permissions: write-all # 给所有工作写权限
 
 jobs:
   jobs_v:
-
     name: building version number and update content
     runs-on: windows-latest
     outputs:

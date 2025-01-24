@@ -16,8 +16,8 @@ print("version:", version)
 fileDir = os.path.dirname(__file__)
 print("file dir:", os.path.dirname(__file__))
 versionFilePath = os.path.join(fileDir, "version.py")
-print("edit file {versionFilePath} output: version = {version}")
+print(f"edit file {versionFilePath} output: version = {version}")
 # 覆盖写出文件 version.py 中
-with open(versionFilePath, 'w') as f:
-    f.write(f'version = "{version}"')
+# with open(versionFilePath, 'w') as f:
+#     f.write(f'version = "{version}"')
 exit()

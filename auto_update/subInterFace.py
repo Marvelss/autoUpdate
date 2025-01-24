@@ -35,6 +35,7 @@ class updateUI(QDialog):
         super(updateUI, self).__init__()
         self.ui = ui_winUpdate.Ui_Form()
         self.ui.setupUi(self)
+        self.initFunc()
         self.setWindowTitle('软件更新')
         self.resize(620, 380)
 
@@ -68,6 +69,13 @@ class updateUI(QDialog):
         print('查询newVersion')
         self.detectUpdateThread = detectUpdateThread(projectName, self.detectUpdateRecallData)
         self.detectUpdateThread.start()
+
+    def initFunc(self):
+        # 如果在window系统中存在旧的文件则自动删除
+        backFile = windowsPath() + ".old.bak"
+        if os.path.exists(backFile):
+            # 删除文件
+            os.remove(backFile)
 
     def closeEvent(self, event):
         # self.detectUpdateThread.quit()
@@ -172,6 +180,7 @@ def onDownloadFile(url, savedFilePath, recallData=None):
                     recallData(progressRate, downloadedSize, fileSize, downloadSpeed, timeRemain)
     return True
 
+
 def windowsPath():
     """
     尝试获取当前可执行文件的路径。
@@ -179,47 +188,13 @@ def windowsPath():
     否则，返回命令行参数中的第一个参数（通常是脚本的路径）。
     """
     if hasattr(sys, '_MEIPASS'):
-        print(sys.executable)
-        time.sleep(5)
+        print(sys.executable[0])
         # PyInstaller打包后的环境
-        return sys.executable
+        return sys.executable[0]
     else:
-        print(sys.argv)
-        time.sleep(5)
+        print(sys.argv[0])
         # 非打包环境，直接返回脚本路径
-        return sys.argv
-
-
-def fileRunPath():
-    """ PyInstaller 单文件的运行目录  """
-    if getattr(sys, 'frozen', False):
-        return os.path.dirname(os.path.realpath(sys.argv[0]))
-    else:
-        return sys.path[0]
-
-
-def updateInit():
-    # 构建时测试运行是否正常的
-    inputParam = sys.argv
-    if len(inputParam) == 2:
-        inputParam1 = inputParam[1]
-        if inputParam1 == "test":
-            print("app run success")
-            # 写出文件
-            with open(fileRunPath() + "/test.txt", "w") as f:
-                f.write("app run success")
-            sys.exit(0)
-
-    # 如果在window系统中存在旧的文件则自动删除
-    currentWindowsPath = windowsPath()
-    if currentWindowsPath == "":
-        # print("非Window编译环境")
-        return False, ""
-    # 检查文件是否存在
-    oldFileName = currentWindowsPath + ".old.bak"
-    if os.path.exists(oldFileName):
-        # 删除文件
-        os.remove(oldFileName)
+        return sys.argv[0]
 
 
 def coverSoftware(exeFilePath):
@@ -474,6 +449,7 @@ def parseURL(urlT, project_name):
         "downloadExe": downloadExe,
     }
 
+
 # # 测试
 # if __name__ == '__main__':
 #     data = getVersionAndURL("Marvelss/autoUpdate")
@@ -483,6 +459,8 @@ if __name__ == "__main__":
     # 下载一个大一点的文件
     # urlT = "https://github.com/MCSLTeam/MCSL2/releases/download/v2.2.6.3/MCSL2-2.2.6.3-Linux-x64.zip"  # 你的文件URL
     urlT = "https://epicgames-download1.akamaized.net/Builds/UnrealEngineLauncher/Installers/Win32/EpicInstaller-17.2.0.msi?launcherfilename=EpicInstaller-17.2.0-4ace3595a0144165b3ef0bfe2942a2c2.msi"
+
+
     def progressInfo(progressRate, downloadedSize, fileSize, downloadSpeed, timeRemain):
         infoT = f"进度 {progressRate}% 已下载 {downloadedSize}MB 文件大小 {fileSize}MB 下载速率 {downloadSpeed}MB 剩余时间 {timeRemain}秒"
         # 控制台当行输出
@@ -490,7 +468,3 @@ if __name__ == "__main__":
 
     # onDownloadFile(urlT,
     #          "QtEsayDesigner_MacOS.zip", progressInfo)
-
-if __name__ == "__main__":
-
-    windowsPath()

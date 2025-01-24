@@ -4,14 +4,15 @@
 @File : main_update.py
 @Description : 基于Git Actions的客户端更新
 """
-import json
+import os
 import sys
-
 from PyQt5.QtWidgets import QWidget, QLabel, QTextEdit, QVBoxLayout, QApplication, QMainWindow, QPushButton
 
 import subInterFace
 import version
+
 currentVersion = version.version
+
 
 class Main(QMainWindow):
     def __init__(self):
@@ -59,20 +60,30 @@ class Main(QMainWindow):
         self.layout.addWidget(self.textEdit, 1)
         self.setCentralWidget(self.main_widget)
 
-        # self.detectUpdateThread = subInterFace.detectUpdateThread(projectName, self.检查更新回到回调函数)
-        # self.detectUpdateThread.start()
 
-    def 检查更新回到回调函数(self, 数据):
-        print("数据", 数据)
-        最新版本 = 数据['版本号']
-        self.label2.setText(f'最新版本:{最新版本}')
-        self.textEdit.setText(json.dumps(数据, indent=4, ensure_ascii=False))
+def fileRunPath():
+    """ PyInstaller 单文件的运行目录  """
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(os.path.realpath(sys.argv[0]))
+    else:
+        return sys.path[0]
+
+
+def updateInit():
+    # 构建时测试运行是否正常的
+    inputParam = sys.argv
+    if len(inputParam) == 2:
+        inputParam1 = inputParam[1]
+        if inputParam1 == "test":
+            print("app run success")
+            # 写出文件
+            with open(fileRunPath() + "/test.txt", "w") as f:
+                f.write("app run success")
+            sys.exit(0)
 
 
 if __name__ == '__main__':
-    subInterFace.updateInit()
-
-    app = QApplication(sys.argv)
-    win = Main()
-    sys.exit(app.exec())
-print(' app run success')
+    updateInit()
+    # app = QApplication(sys.argv)
+    # win = Main()
+    # sys.exit(app.exec())
