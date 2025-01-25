@@ -84,6 +84,6 @@ def updateInit():
 
 if __name__ == '__main__':
     updateInit()
-    # app = QApplication(sys.argv)
-    # win = Main()
-    # sys.exit(app.exec())
+    app = QApplication(sys.argv)
+    win = Main()
+    sys.exit(app.exec())

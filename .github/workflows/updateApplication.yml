@@ -6,8 +6,7 @@ on:
       - main
     paths: # 这里是用来指定哪个文件更改，才会触发的
       - auto_update/version.py
-    pull_request:
-      types: [ opened, reopened, synchronize, labeled, unlabeled ]
+
 permissions: write-all # 给所有工作写权限
 
 jobs:
