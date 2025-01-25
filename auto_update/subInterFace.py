@@ -41,16 +41,13 @@ class updateUI(QDialog):
 
         # 绑定按钮事件
         self.ui.pushButton_azgx.clicked.connect(self.install)
-        self.ui.pushButton_gfwz.clicked.connect(self.openProjectURL)
         self.ui.pushButton_tgbb.clicked.connect(self.close)
-        self.ui.pushButton_ok.clicked.connect(self.close)
 
         # 隐藏更新进度条和状态编辑框
         self.ui.progressBar.hide()
         self.ui.progressBar.setValue(0)
         self.ui.progressBar.setRange(0, 100)
         self.ui.label_zt.hide()
-        self.ui.pushButton_ok.hide()
         self.ui.pushButton_azgx.setEnabled(False)
         self.ui.pushButton_tgbb.setEnabled(False)
         # textEdit 禁止编辑
@@ -60,13 +57,10 @@ class updateUI(QDialog):
         self.applicationName = applicationName
         self.currentVersion = currentVersion
         self.projectURL = projectURL
-        newVersion = "查询中..."
-        self.ui.label_2.setText(newVersion)
-        self.ui.label_bbh.setText(f'newVersion:{newVersion} 当前版本: {self.currentVersion}')
         self.downloadDir = os.path.expanduser('~/Downloads')
         if isWindows():
             self.rarPath = os.path.abspath(self.downloadDir + f"/{self.applicationName}.exe")
-        print('查询newVersion')
+        print('开始检查')
         self.detectUpdateThread = detectUpdateThread(projectName, self.detectUpdateRecallData)
         self.detectUpdateThread.start()
 
@@ -85,21 +79,19 @@ class updateUI(QDialog):
 
     def detectUpdateRecallData(self, updateContent):
         print("数据", updateContent)
+        if updateContent is None:
+            return
         newVersion = updateContent['versionNum']
-        self.ui.label_bbh.setText(f'newVersion:{newVersion} 当前版本: {self.currentVersion}')
         self.ui.textEdit.setHtml(updateContent['updateContent'])
         self.downloadExe = updateContent['downloadExe']
 
         if newVersion == self.currentVersion or newVersion == "":
-            self.ui.label_2.setText("你使用的是newVersion")
             self.ui.pushButton_azgx.hide()
             self.ui.pushButton_tgbb.hide()
-            self.ui.pushButton_ok.show()
             return
 
         self.ui.pushButton_azgx.setEnabled(True)
         self.ui.pushButton_tgbb.setEnabled(True)
-        self.ui.label_2.setText("发现新版本")
 
     def install(self):
         print('install')
@@ -247,17 +239,16 @@ class downloadFileThread(QThread):
         self.finished.connect(self.ui_end)
 
     def run(self):
-        if self.downloadURL == None:
+        if self.downloadURL is None:
             print("请传入下载地址")
             return
 
         def progressInfo(progressRate, downloadedSize, fileSize, downloadSpeed, timeRemain):
-            infoT = f"文件大小 {fileSize}MB 速度 {downloadSpeed}MB 剩余时间 {timeRemain}秒"
+            infoT = f"文件大小 {fileSize}MB 速度 {downloadSpeed}MB/s 剩余时间 {timeRemain}秒"
             self.progressBarSign.emit(progressRate, infoT)
 
         try:
-            downloadResult = onDownloadFile(self.downloadURL, self.savedFilePath, progressInfo)
-            self.downloadResult = True
+            self.downloadResult = onDownloadFile(self.downloadURL, self.savedFilePath, progressInfo)
         except:
             self.downloadResult = False
 
