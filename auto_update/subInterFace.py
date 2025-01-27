@@ -431,7 +431,12 @@ def parseURL(urlT, project_name):
         versionT = ""
         releaseTime = ""
         updateContent = ""
-
+    print('-'*20)
+    print(f'versionNum:{versionT}')
+    print(f'downloadURL:{downloadURLT}')
+    print(f'updateContent:{updateContent}')
+    print(f'releaseTime:{releaseTime}')
+    print(f'downloadExe:{downloadExe}')
     return {
         "versionNum": versionT,
         "downloadURL": downloadURLT,
